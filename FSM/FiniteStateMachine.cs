@@ -31,7 +31,9 @@ namespace de.ahzf.Vanaheimr.FSM
     /// </summary>
     /// <typeparam name="TState">The type of the states.</typeparam>
     /// <typeparam name="TSignal">The type of the signals.</typeparam>
-    public class FiniteStateMachine<TState, TSignal> where TState : struct
+    public class FiniteStateMachine<TState, TSignal>
+        where TState  : struct, IComparable, IFormattable, IConvertible // all interfaces of System.Enum ;)
+        where TSignal : struct, IComparable, IFormattable, IConvertible
     {
 
         #region Data
