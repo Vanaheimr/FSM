@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TCPFiniteStateMachine.cs" />
     <Compile Include="FSMAttributes.cs" />
     <Compile Include="FiniteStateMachine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
