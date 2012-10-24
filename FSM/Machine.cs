@@ -7,8 +7,6 @@ namespace de.ahzf.Vanaheimr.FSM
 {
 
     public class Machine<TStates, TSignal>
-        //where TStates : IEquatable<TStates>
-        //where TSignal : IEquatable<TSignal>
     {
 
         private Dictionary<TStates, Dictionary<TSignal, Tuple<Action, TStates>>> Transitions;
@@ -19,6 +17,10 @@ namespace de.ahzf.Vanaheimr.FSM
 
         public String Name { get; private set; }
 
+        public TStates StartState { get; set; }
+
+        public HashSet<TStates> AcceptingStates { get; private set; }
+        public HashSet<TStates> ErrorStates     { get; private set; }
         public TStates ErrorState { get; private set; }
 
 
@@ -27,34 +29,33 @@ namespace de.ahzf.Vanaheimr.FSM
             this.Name = Name;
             this.Transitions = new Dictionary<TStates, Dictionary<TSignal, Tuple<Action, TStates>>>();
             this.Signals = new HashSet<TSignal>();
-            this.ErrorState = ErrorState;
-            AddState_(ErrorState);
+
+            this.AcceptingStates = new HashSet<TStates>();
+            this.ErrorStates     = new HashSet<TStates>();
+            this.ErrorState      = ErrorState;
+            ErrorStates.Add(ErrorState);
+
+            foreach (TStates state in Enum.GetValues(typeof(TStates)))
+                AddState(state);
+
+            foreach (TSignal signal in Enum.GetValues(typeof(TSignal)))
+                AddSignal(signal);
+
         }
 
-        private TStates AddState_(TStates State)
+        private TStates AddState(TStates State)
         {
             Transitions.Add(State, new Dictionary<TSignal, Tuple<System.Action, TStates>>());
             return State;
         }
 
-        public TStates AddState(TStates Id)
-        {
-
-            var State = AddState_(Id);
-
-            if (CurrentState == null)
-                CurrentState = State;
-
-            return State;
-
-        }
 
         public void SetState(TStates State)
         {
             CurrentState = State;
         }
 
-        public TSignal AddSignal(TSignal Signal)
+        private TSignal AddSignal(TSignal Signal)
         {
             Signals.Add(Signal);
             return Signal;
@@ -77,7 +78,10 @@ namespace de.ahzf.Vanaheimr.FSM
         public void ProcessSignal(TSignal Signal)
         {
 
-            if (CurrentState.Equals(ErrorState))
+            if (CurrentState == null)
+                CurrentState = StartState;
+
+            if (ErrorStates.Contains(CurrentState))
                 return;
 
             var d1 = Transitions[CurrentState];

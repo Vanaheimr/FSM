@@ -6,14 +6,14 @@ using System.Text;
 namespace de.ahzf.Vanaheimr.FSM.TestApplication1
 {
 
-    public enum myStates
+    public enum State
     {
         Start,
         End,
         Error
     }
 
-    public enum mySignals
+    public enum Signal
     {
         Hello,
         GoToHell
@@ -25,26 +25,22 @@ namespace de.ahzf.Vanaheimr.FSM.TestApplication1
         public static void Main(String[] Args)
         {
 
-            var FSM1 = new Machine<myStates, mySignals>("FSM1", myStates.Error);
+            var FSM1 = new Machine<State, Signal>("FSM1", State.Error) { StartState = State.Start };
+//            FSM1.ErrorStates.Add(States.Error);
 
-            var Start = FSM1.AddState(myStates.Start);
-            var End   = FSM1.AddState(myStates.End);
-
-            var Hello = FSM1.AddSignal(mySignals.Hello);
-
-            FSM1.AddTransition(myStates.Start, mySignals.Hello, () => Console.WriteLine("Hello received!"), myStates.End);
+            FSM1.AddTransition(State.Start, Signal.Hello, () => Console.WriteLine("Hello received!"), State.End);
 
             Console.WriteLine(FSM1.CurrentState);
 
-            FSM1.ProcessSignal(mySignals.Hello);
+            FSM1.ProcessSignal(Signal.Hello);
 
             Console.WriteLine(FSM1.CurrentState);
 
-            FSM1.ProcessSignal(mySignals.GoToHell);
+            FSM1.ProcessSignal(Signal.GoToHell);
 
             Console.WriteLine(FSM1.CurrentState);
 
-            FSM1.ProcessSignal(mySignals.Hello);
+            FSM1.ProcessSignal(Signal.Hello);
 
             Console.WriteLine(FSM1.CurrentState);
 
