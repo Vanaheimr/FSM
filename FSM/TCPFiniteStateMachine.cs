@@ -58,29 +58,29 @@ namespace de.ahzf.Vanaheimr.FSM
     /// <summary>
     /// A finite state machine for the Transmission Control Protocol.
     /// </summary>
-    public class TCPFiniteStateMachine : FiniteStateMachine<TCPState, TCPSignal>
+    public class TCPStateMachine : FiniteStateMachine<TCPState, TCPSignal>
     {
 
         #region Constructor(s)
 
-        #region TCPFiniteStateMachine()
+        #region TCPStateMachine()
 
         /// <summary>
         /// Create a new finite state machine.
         /// </summary>
-        public TCPFiniteStateMachine()
+        public TCPStateMachine()
             : this(Guid.NewGuid().ToString())
         { }
 
         #endregion
 
-        #region TCPFiniteStateMachine(FSMName)
+        #region TCPStateMachine(FSMName)
 
         /// <summary>
         /// Create a new finite state machine.
         /// </summary>
         /// <param name="FSMName">A name or identification for this finite state machine.</param>
-        public TCPFiniteStateMachine(String FSMName)
+        public TCPStateMachine(String FSMName)
             : base(FSMName)
         {
 
