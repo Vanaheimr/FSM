@@ -21,7 +21,7 @@ using System;
 
 #endregion
 
-namespace de.ahzf.Vanaheimr.FSM
+namespace eu.Vanaheimr.FSM
 {
 
     /// <summary>

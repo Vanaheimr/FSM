@@ -23,7 +23,7 @@ using System.Collections.Generic;
 
 #endregion
 
-namespace de.ahzf.Vanaheimr.FSM
+namespace eu.Vanaheimr.FSM
 {
 
     /// <summary>
